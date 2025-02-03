@@ -85,10 +85,10 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
 -- RICHARD
-vim.api.nvim_set_keymap('i', '<C-h>', '<Left>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-l>', '<Right>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-j>', '<Down>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<C-k>', '<Up>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<M-h>', '<Left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<M-l>', '<Right>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<M-j>', '<Down>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('i', '<M-k>', '<Up>', { noremap = true, silent = true })
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -394,7 +394,13 @@ require('lazy').setup({
         --     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
         --   },
         -- },
-        -- pickers = {}
+        pickers = {
+          colorscheme = {
+            enable_preview = true,
+            theme = 'cursor',
+          },
+        },
+
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -861,6 +867,16 @@ require('lazy').setup({
       vim.cmd.hi 'Comment gui=none'
     end,
   },
+
+  { 'rebelot/kanagawa.nvim' },
+  { 'catppuccin/nvim', name = 'catppuccin' },
+  { 'EdenEast/nightfox.nvim' },
+  { 'rose-pine/neovim', name = 'rose-pine' },
+  { 'navarasu/onedark.nvim' },
+  { 'Mofiqul/dracula.nvim' },
+  { 'projekt0n/github-nvim-theme', name = 'github-theme' },
+  { 'ellisonleao/gruvbox.nvim' },
+  { 'Shatur/neovim-ayu' },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
