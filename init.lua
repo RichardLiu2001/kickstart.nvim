@@ -84,11 +84,11 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
--- RICHARD
-vim.api.nvim_set_keymap('i', '<M-h>', '<Left>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<M-l>', '<Right>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<M-j>', '<Down>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('i', '<M-k>', '<Up>', { noremap = true, silent = true })
+-- Richard: control arrow keys using Alt + hjkl
+vim.keymap.set('i', '<M-h>', '<Left>', { noremap = true, silent = true })
+vim.keymap.set('i', '<M-l>', '<Right>', { noremap = true, silent = true })
+vim.keymap.set('i', '<M-j>', '<Down>', { noremap = true, silent = true })
+vim.keymap.set('i', '<M-k>', '<Up>', { noremap = true, silent = true })
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -151,7 +151,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' } -- Richard: remove { tab = '» ' } because it's annoying
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -161,6 +161,9 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Richard: automatically go to next/previous line when using arrow keys
+vim.opt.whichwrap:append '<,>,[,]'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -206,6 +209,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
+  end,
+})
+
+-- Richard: disable cindent for C++ because it fucks shit up
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'cpp',
+  callback = function()
+    vim.opt_local.cindent = false
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.tabstop = 4
   end,
 })
 
@@ -628,7 +641,7 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -711,7 +724,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = true }
         local lsp_format_opt
         if disable_filetypes[vim.bo[bufnr].filetype] then
           lsp_format_opt = 'never'
@@ -725,6 +738,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        cpp = { 'clangd' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -924,7 +938,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -934,7 +948,7 @@ require('lazy').setup({
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
       },
-      indent = { enable = true, disable = { 'ruby' } },
+      indent = { enable = true, disable = { 'ruby', 'cpp' } }, -- Richard: disable indenting for C++, same issue as earlier
     },
     -- There are additional nvim-treesitter modules that you can use to interact
     -- with nvim-treesitter. You should go explore a few and see what interests you:
@@ -956,7 +970,7 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
