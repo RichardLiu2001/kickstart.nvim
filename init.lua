@@ -151,7 +151,7 @@ vim.opt.splitbelow = true
 --  See `:help 'list'`
 --  and `:help 'listchars'`
 vim.opt.list = true
-vim.opt.listchars = { tab = '  ', trail = '·', nbsp = '␣' } -- Richard: remove { tab = '» ' } because it's annoying
+vim.opt.listchars = { tab = '   ', trail = '·', nbsp = '␣' } -- Richard: remove { tab = '» ' } because it's annoying
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
@@ -218,6 +218,7 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function()
     vim.opt_local.cindent = false
     vim.opt_local.shiftwidth = 4
+    vim.opt_local.expandtab = false
     vim.opt_local.tabstop = 4
   end,
 })
@@ -247,7 +248,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically -- RICHARD: disable this shit
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -850,6 +851,9 @@ require('lazy').setup({
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
+        cmp.setup.filetype('cpp', {
+          enabled = false, -- RICHARD: disable autocomplete for C++
+        }),
         sources = {
           {
             name = 'lazydev',
