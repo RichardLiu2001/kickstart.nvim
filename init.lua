@@ -873,28 +873,33 @@ require('lazy').setup({
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+    'loctvl842/monokai-pro.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      vim.cmd.colorscheme 'monokai-pro-machine'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
   },
 
+  { 'folke/tokyonight.nvim' },
   { 'rebelot/kanagawa.nvim' },
   { 'catppuccin/nvim', name = 'catppuccin' },
   { 'EdenEast/nightfox.nvim' },
   { 'rose-pine/neovim', name = 'rose-pine' },
-  { 'navarasu/onedark.nvim' },
+  { 'joshdick/onedark.vim' },
   { 'Mofiqul/dracula.nvim' },
   { 'projekt0n/github-nvim-theme', name = 'github-theme' },
   { 'ellisonleao/gruvbox.nvim' },
   { 'Shatur/neovim-ayu' },
+  { 'sainnhe/everforest' },
+  { 'cocopon/iceberg.vim' },
+  { 'bluz71/vim-nightfly-colors', name = 'nightfly', lazy = false },
+  { 'uloco/bluloco.nvim', dependencies = { 'rktjmp/lush.nvim' }, lazy = false },
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
