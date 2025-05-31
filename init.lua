@@ -90,6 +90,14 @@ vim.keymap.set('i', '<M-l>', '<Right>', { noremap = true, silent = true })
 vim.keymap.set('i', '<M-j>', '<Down>', { noremap = true, silent = true })
 vim.keymap.set('i', '<M-k>', '<Up>', { noremap = true, silent = true })
 
+-- Richard: set indentation
+vim.opt.expandtab = false     -- Use real tabs
+vim.opt.tabstop = 4           -- A tab is shown as 4 spaces wide
+vim.opt.softtabstop = 4       -- Insert/delete tab as if it's 4 spaces
+vim.opt.shiftwidth = 4        -- Indent/outdent by 1 tab
+vim.opt.smartindent = true    -- Enable smart indenting
+vim.opt.autoindent = true     -- Keep indent from previous line
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
